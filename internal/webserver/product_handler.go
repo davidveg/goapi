@@ -21,7 +21,11 @@ func (wph *WebProductHandler) GetProducts(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	json.NewEncoder(w).Encode(products)
+	err1 := json.NewEncoder(w).Encode(products)
+	if err1 != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (wph *WebProductHandler) GetProduct(w http.ResponseWriter, r *http.Request) {
