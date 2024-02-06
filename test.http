@@ -1,0 +1,39 @@
+POST http://localhost:8080/category HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name" : "Category 3",
+  "description" : "Category 3 description"
+}
+
+###
+GET http://localhost:8080/category HTTP/1.1
+
+###
+GET http://localhost:8080/category/1efbf3db-a8f1-4140-bfeb-63b1d1b9ffed HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+###
+POST http://localhost:8080/product HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Product 1",
+  "description" : "Product description",
+  "price": 100,
+  "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "category_id": "1efbf3db-a8f1-4140-bfeb-63b1d1b9ffed"
+}
+
+###
+GET http://localhost:8080/product/af00cf9c-2b89-4986-820c-6391d5b389e7 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+###
+GET http://localhost:8080/product/category/1efbf3db-a8f1-4140-bfeb-63b1d1b9ffed HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
