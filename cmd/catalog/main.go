@@ -28,7 +28,7 @@ func main() {
 	categoryService := service.NewCategoryService(*categoryDB)
 
 	productDB := database.NewProductDB(db)
-	productService := service.NewProductService(*productDB)
+	productService := service.NewProductService(*productDB, *categoryDB)
 
 	webCategoryHandler := webserver.NewWebCategoryHandler(categoryService)
 	webProductHandler := webserver.NewWebProductHandler(productService)

@@ -6,11 +6,15 @@ import (
 )
 
 type ProductService struct {
-	ProductDB database.ProductDB
+	ProductDB  database.ProductDB
+	CategoryDB database.CategoryDB
 }
 
-func NewProductService(productDB database.ProductDB) *ProductService {
-	return &ProductService{ProductDB: productDB}
+func NewProductService(productDB database.ProductDB, categoryDB database.CategoryDB) *ProductService {
+	return &ProductService{
+		ProductDB:  productDB,
+		CategoryDB: categoryDB,
+	}
 }
 
 func (ps *ProductService) GetProducts() ([]*entity.Product, error) {
@@ -38,7 +42,8 @@ func (ps *ProductService) GetProductsByCategoryID(categoryID string) ([]*entity.
 }
 
 func (ps *ProductService) CreateProduct(name, description, categoryId, imageUrl string, price float64) (*entity.Product, error) {
-	product := entity.NewProduct(name, description, categoryId, imageUrl, price)
+	category, _ := ps.CategoryDB.GetCategory(categoryId)
+	product := entity.NewProduct(name, description, imageUrl, price, *category)
 	p, err := ps.ProductDB.CreateProduct(product)
 	if err != nil {
 		return nil, err
