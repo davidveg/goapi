@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/davidveg/goapi/app/internal/database"
-	"github.com/davidveg/goapi/app/internal/service"
-	"github.com/davidveg/goapi/app/internal/webserver"
+	"github.com/davidveg/goapi/modules/internal/database"
+	"github.com/davidveg/goapi/modules/internal/service"
+	"github.com/davidveg/goapi/modules/internal/webserver"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	_ "github.com/go-sql-driver/mysql"

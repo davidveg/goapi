@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"github.com/davidveg/goapi/app/internal/entity"
+	"github.com/davidveg/goapi/modules/internal/entity"
 )
 
 type ProductDB struct {

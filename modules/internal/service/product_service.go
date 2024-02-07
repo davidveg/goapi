@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/davidveg/goapi/app/internal/database"
-	"github.com/davidveg/goapi/app/internal/entity"
+	"github.com/davidveg/goapi/modules/internal/database"
+	"github.com/davidveg/goapi/modules/internal/entity"
 )
 
 type ProductService struct {

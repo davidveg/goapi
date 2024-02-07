@@ -11,10 +11,10 @@ COPY go.sum .
 
 RUN go mod download
 
-COPY ./app .
+COPY ./modules ./modules
 
 # Build the Go app
-RUN go build -o ./out/go-api ./cmd/catalog/main.go
+RUN go build -o ./out/go-api ./modules/cmd/catalog/main.go
 
 
 # This container exposes port 8080 to the outside world
