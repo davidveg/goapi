@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"github.com/devfullcycle/imersao17/goapi/internal/entity"
+	"github.com/davidveg/goapi/app/internal/entity"
 )
 
 type CategoryDB struct {

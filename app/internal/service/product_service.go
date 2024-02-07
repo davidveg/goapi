@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/devfullcycle/imersao17/goapi/internal/database"
-	"github.com/devfullcycle/imersao17/goapi/internal/entity"
+	"github.com/davidveg/goapi/app/internal/database"
+	"github.com/davidveg/goapi/app/internal/entity"
 )
 
 type ProductService struct {

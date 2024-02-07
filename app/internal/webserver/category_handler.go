@@ -2,8 +2,8 @@ package webserver
 
 import (
 	"encoding/json"
-	"github.com/devfullcycle/imersao17/goapi/internal/entity"
-	"github.com/devfullcycle/imersao17/goapi/internal/service"
+	"github.com/davidveg/goapi/app/internal/entity"
+	"github.com/davidveg/goapi/app/internal/service"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
