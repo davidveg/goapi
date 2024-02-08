@@ -6,11 +6,11 @@ import (
 )
 
 type ProductService struct {
-	ProductDB  database.ProductDB
-	CategoryDB database.CategoryDB
+	ProductDB  database.ProductRepository
+	CategoryDB database.CategoryRepository
 }
 
-func NewProductService(productDB database.ProductDB, categoryDB database.CategoryDB) *ProductService {
+func NewProductService(productDB database.ProductRepository, categoryDB database.CategoryRepository) *ProductService {
 	return &ProductService{
 		ProductDB:  productDB,
 		CategoryDB: categoryDB,

@@ -5,15 +5,15 @@ import (
 	"github.com/davidveg/goapi/modules/internal/entity"
 )
 
-type CategoryDB struct {
+type CategoryRepository struct {
 	db *sql.DB
 }
 
-func NewCategoryDB(db *sql.DB) *CategoryDB {
-	return &CategoryDB{db: db}
+func CreateCategoryRepository(db *sql.DB) *CategoryRepository {
+	return &CategoryRepository{db: db}
 }
 
-func (cd *CategoryDB) GetCategories() ([]*entity.Category, error) {
+func (cd *CategoryRepository) GetCategories() ([]*entity.Category, error) {
 	rows, err := cd.db.Query("SELECT id, name, description FROM categories")
 	if err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func (cd *CategoryDB) GetCategories() ([]*entity.Category, error) {
 	return categories, nil
 }
 
-func (cd *CategoryDB) GetCategory(id string) (*entity.Category, error) {
+func (cd *CategoryRepository) GetCategory(id string) (*entity.Category, error) {
 	var category entity.Category
 	err := cd.db.QueryRow("SELECT id, name, description FROM categories WHERE id = ?", id).Scan(&category.ID, &category.Name, &category.Description)
 	if err != nil {
@@ -40,7 +40,7 @@ func (cd *CategoryDB) GetCategory(id string) (*entity.Category, error) {
 	return &category, nil
 }
 
-func (cd *CategoryDB) CreateCategory(category *entity.Category) (string, error) {
+func (cd *CategoryRepository) CreateCategory(category *entity.Category) (string, error) {
 	_, err := cd.db.Exec("INSERT INTO categories(id, name, description) VALUES (?,?,?)", category.ID, category.Name, category.Description)
 	if err != nil {
 		return "", err

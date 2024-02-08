@@ -1,4 +1,4 @@
-package webserver
+package entrypoints
 
 import (
 	"encoding/json"
@@ -8,15 +8,15 @@ import (
 	"net/http"
 )
 
-type WebCategoryHandler struct {
+type CategoryController struct {
 	CategoryService *service.CategoryService
 }
 
-func NewWebCategoryHandler(categoryService *service.CategoryService) *WebCategoryHandler {
-	return &WebCategoryHandler{CategoryService: categoryService}
+func CreateCategoryController(categoryService *service.CategoryService) *CategoryController {
+	return &CategoryController{CategoryService: categoryService}
 }
 
-func (wch *WebCategoryHandler) GetCategories(w http.ResponseWriter, r *http.Request) {
+func (wch *CategoryController) GetCategories(w http.ResponseWriter, r *http.Request) {
 	categories, err := wch.CategoryService.GetCategories()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -27,7 +27,7 @@ func (wch *WebCategoryHandler) GetCategories(w http.ResponseWriter, r *http.Requ
 	}
 }
 
-func (wch *WebCategoryHandler) GetCategory(w http.ResponseWriter, r *http.Request) {
+func (wch *CategoryController) GetCategory(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
 		http.Error(w, "id is required", http.StatusBadRequest)
@@ -45,7 +45,7 @@ func (wch *WebCategoryHandler) GetCategory(w http.ResponseWriter, r *http.Reques
 	}
 }
 
-func (wch *WebCategoryHandler) CreateCategory(w http.ResponseWriter, r *http.Request) {
+func (wch *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
 	var category entity.Category
 	err := json.NewDecoder(r.Body).Decode(&category)
 	if err != nil {

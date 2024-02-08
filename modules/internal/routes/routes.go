@@ -2,35 +2,41 @@ package routes
 
 import (
 	"github.com/davidveg/goapi/modules/internal/database"
+	"github.com/davidveg/goapi/modules/internal/database/connectors"
+	"github.com/davidveg/goapi/modules/internal/entrypoints"
 	"github.com/davidveg/goapi/modules/internal/service"
-	"github.com/davidveg/goapi/modules/internal/webserver"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-var db = database.GetConnection()
+var db = connectors.GetDBConnection()
 
 func CreateRoutes() *chi.Mux {
-	categoryDB := database.NewCategoryDB(db)
-	categoryService := service.NewCategoryService(*categoryDB)
-
-	productDB := database.NewProductDB(db)
-	productService := service.NewProductService(*productDB, *categoryDB)
-
-	webCategoryHandler := webserver.NewWebCategoryHandler(categoryService)
-	webProductHandler := webserver.NewWebProductHandler(productService)
+	CategoryController, ProductController := CreateControllers()
 
 	routes := chi.NewRouter()
 	routes.Use(middleware.Logger)
 	routes.Use(middleware.Recoverer)
-	routes.Get("/category/{id}", webCategoryHandler.GetCategory)
-	routes.Get("/category", webCategoryHandler.GetCategories)
-	routes.Post("/category", webCategoryHandler.CreateCategory)
+	routes.Get("/category/{id}", CategoryController.GetCategory)
+	routes.Get("/category", CategoryController.GetCategories)
+	routes.Post("/category", CategoryController.CreateCategory)
 
-	routes.Get("/product/{id}", webProductHandler.GetProduct)
-	routes.Get("/product", webProductHandler.GetProducts)
-	routes.Get("/product/category/{categoryID}", webProductHandler.GetProductsByCategoryId)
-	routes.Post("/product", webProductHandler.CreateProduct)
+	routes.Get("/product/{id}", ProductController.GetProduct)
+	routes.Get("/product", ProductController.GetProducts)
+	routes.Get("/product/category/{categoryID}", ProductController.GetProductsByCategoryId)
+	routes.Post("/product", ProductController.CreateProduct)
 
 	return routes
+}
+
+func CreateControllers() (*entrypoints.CategoryController, *entrypoints.ProductController) {
+	categoryRepository := database.CreateCategoryRepository(db)
+	categoryService := service.NewCategoryService(*categoryRepository)
+
+	productRepository := database.CreateProductRepository(db)
+	productService := service.NewProductService(*productRepository, *categoryRepository)
+
+	categoryController := entrypoints.CreateCategoryController(categoryService)
+	productController := entrypoints.CreateProductController(productService)
+	return categoryController, productController
 }

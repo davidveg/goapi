@@ -5,15 +5,15 @@ import (
 	"github.com/davidveg/goapi/modules/internal/entity"
 )
 
-type ProductDB struct {
+type ProductRepository struct {
 	db *sql.DB
 }
 
-func NewProductDB(db *sql.DB) *ProductDB {
-	return &ProductDB{db: db}
+func CreateProductRepository(db *sql.DB) *ProductRepository {
+	return &ProductRepository{db: db}
 }
 
-func (pd *ProductDB) GetProducts() ([]*entity.Product, error) {
+func (pd *ProductRepository) GetProducts() ([]*entity.Product, error) {
 	rows, err := pd.db.Query("SELECT id, name,  description, price, category_id, image_url FROM products")
 	if err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func (pd *ProductDB) GetProducts() ([]*entity.Product, error) {
 	return products, nil
 }
 
-func (pd *ProductDB) GetProduct(id string) (*entity.Product, error) {
+func (pd *ProductRepository) GetProduct(id string) (*entity.Product, error) {
 	var product entity.Product
 	err := pd.db.QueryRow("SELECT id, name, description, price, category_id, image_url FROM products WHERE id = ?", id).Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Category.ID, &product.ImageURL)
 	if err != nil {
@@ -40,7 +40,7 @@ func (pd *ProductDB) GetProduct(id string) (*entity.Product, error) {
 	return &product, nil
 }
 
-func (pd *ProductDB) GetProductByCategoryID(categoryID string) ([]*entity.Product, error) {
+func (pd *ProductRepository) GetProductByCategoryID(categoryID string) ([]*entity.Product, error) {
 	rows, err := pd.db.Query("SELECT id, name, description, price, category_id, image_url from products where category_id = ?", categoryID)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (pd *ProductDB) GetProductByCategoryID(categoryID string) ([]*entity.Produc
 	return products, nil
 }
 
-func (pd *ProductDB) CreateProduct(product *entity.Product) (*entity.Product, error) {
+func (pd *ProductRepository) CreateProduct(product *entity.Product) (*entity.Product, error) {
 	_, err := pd.db.Exec("INSERT INTO products(id, name, description, price, category_id, image_url) VALUES (?,?,?,?,?,?)", product.ID, product.Name, product.Description, product.Price, product.Category.ID, product.ImageURL)
 	if err != nil {
 		return nil, err

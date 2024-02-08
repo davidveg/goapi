@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/davidveg/goapi/modules/internal/database"
+	"github.com/davidveg/goapi/modules/internal/database/connectors"
 	"github.com/davidveg/goapi/modules/internal/routes"
 	"net/http"
 )
@@ -15,5 +15,5 @@ func main() {
 		fmt.Println("ERROR {}", err1)
 		return
 	}
-	defer database.CloseDBConnection()
+	defer connectors.CloseDBConnection()
 }

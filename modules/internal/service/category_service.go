@@ -6,10 +6,10 @@ import (
 )
 
 type CategoryService struct {
-	CategoryDB database.CategoryDB
+	CategoryDB database.CategoryRepository
 }
 
-func NewCategoryService(categoryDB database.CategoryDB) *CategoryService {
+func NewCategoryService(categoryDB database.CategoryRepository) *CategoryService {
 	return &CategoryService{CategoryDB: categoryDB}
 }
 

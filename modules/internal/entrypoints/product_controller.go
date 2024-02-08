@@ -1,22 +1,22 @@
-package webserver
+package entrypoints
 
 import (
 	"encoding/json"
+	"github.com/davidveg/goapi/modules/internal/entrypoints/dto"
 	"github.com/davidveg/goapi/modules/internal/service"
-	"github.com/davidveg/goapi/modules/internal/webserver/dto"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
 
-type WebProductHandler struct {
+type ProductController struct {
 	ProductService *service.ProductService
 }
 
-func NewWebProductHandler(productService *service.ProductService) *WebProductHandler {
-	return &WebProductHandler{ProductService: productService}
+func CreateProductController(productService *service.ProductService) *ProductController {
+	return &ProductController{ProductService: productService}
 }
 
-func (wph *WebProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
+func (wph *ProductController) GetProducts(w http.ResponseWriter, r *http.Request) {
 	products, err := wph.ProductService.GetProducts()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -28,7 +28,7 @@ func (wph *WebProductHandler) GetProducts(w http.ResponseWriter, r *http.Request
 	}
 }
 
-func (wph *WebProductHandler) GetProduct(w http.ResponseWriter, r *http.Request) {
+func (wph *ProductController) GetProduct(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	if id == "" {
 		http.Error(w, "id is required", http.StatusBadRequest)
@@ -46,7 +46,7 @@ func (wph *WebProductHandler) GetProduct(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func (wph *WebProductHandler) GetProductsByCategoryId(w http.ResponseWriter, r *http.Request) {
+func (wph *ProductController) GetProductsByCategoryId(w http.ResponseWriter, r *http.Request) {
 	categoryID := chi.URLParam(r, "categoryID")
 	if categoryID == "" {
 		http.Error(w, "categoryID is required", http.StatusBadRequest)
@@ -64,7 +64,7 @@ func (wph *WebProductHandler) GetProductsByCategoryId(w http.ResponseWriter, r *
 	}
 }
 
-func (wph *WebProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
+func (wph *ProductController) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var productReq dto.ProductRequest
 	err := json.NewDecoder(r.Body).Decode(&productReq)
 	if err != nil {

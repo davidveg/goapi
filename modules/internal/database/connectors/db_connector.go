@@ -1,4 +1,4 @@
-package database
+package connectors
 
 import (
 	"database/sql"
@@ -6,7 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func GetConnection() *sql.DB {
+func GetDBConnection() *sql.DB {
 	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/imersao17")
 	if err != nil {
 		panic(err.Error())
@@ -15,7 +15,7 @@ func GetConnection() *sql.DB {
 }
 
 func CloseDBConnection() {
-	db := GetConnection()
+	db := GetDBConnection()
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
