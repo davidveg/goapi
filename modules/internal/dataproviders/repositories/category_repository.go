@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"database/sql"
+	"github.com/davidveg/goapi/modules/internal/dataproviders/connectors"
 	"github.com/davidveg/goapi/modules/internal/entities"
 )
 
@@ -45,5 +46,6 @@ func (cd *CategoryRepository) CreateCategory(category *entities.Category) (strin
 	if err != nil {
 		return "", err
 	}
+	defer connectors.CloseDBConnection()
 	return category.ID, nil
 }

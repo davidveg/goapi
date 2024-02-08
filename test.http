@@ -3,8 +3,8 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-  "name" : "Category 2",
-  "description" : "Category 2 description"
+  "name" : "Category 3",
+  "description" : "Category 3 description"
 }
 
 ###

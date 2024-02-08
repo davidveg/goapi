@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"database/sql"
+	"github.com/davidveg/goapi/modules/internal/dataproviders/connectors"
 	"github.com/davidveg/goapi/modules/internal/entities"
 )
 
@@ -63,5 +64,6 @@ func (pd *ProductRepository) CreateProduct(product *entities.Product) (*entities
 	if err != nil {
 		return nil, err
 	}
+	defer connectors.CloseDBConnection()
 	return product, nil
 }
