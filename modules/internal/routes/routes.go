@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/davidveg/goapi/modules/internal/database"
 	"github.com/davidveg/goapi/modules/internal/database/connectors"
+	"github.com/davidveg/goapi/modules/internal/database/repositories"
 	"github.com/davidveg/goapi/modules/internal/entrypoints"
 	"github.com/davidveg/goapi/modules/internal/service"
 	"github.com/go-chi/chi/v5"
@@ -30,10 +30,10 @@ func CreateRoutes() *chi.Mux {
 }
 
 func CreateControllers() (*entrypoints.CategoryController, *entrypoints.ProductController) {
-	categoryRepository := database.CreateCategoryRepository(db)
+	categoryRepository := repositories.CreateCategoryRepository(db)
 	categoryService := service.NewCategoryService(*categoryRepository)
 
-	productRepository := database.CreateProductRepository(db)
+	productRepository := repositories.CreateProductRepository(db)
 	productService := service.NewProductService(*productRepository, *categoryRepository)
 
 	categoryController := entrypoints.CreateCategoryController(categoryService)

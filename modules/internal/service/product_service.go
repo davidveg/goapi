@@ -1,16 +1,16 @@
 package service
 
 import (
-	"github.com/davidveg/goapi/modules/internal/database"
+	"github.com/davidveg/goapi/modules/internal/database/repositories"
 	"github.com/davidveg/goapi/modules/internal/entity"
 )
 
 type ProductService struct {
-	ProductDB  database.ProductRepository
-	CategoryDB database.CategoryRepository
+	ProductDB  repositories.ProductRepository
+	CategoryDB repositories.CategoryRepository
 }
 
-func NewProductService(productDB database.ProductRepository, categoryDB database.CategoryRepository) *ProductService {
+func NewProductService(productDB repositories.ProductRepository, categoryDB repositories.CategoryRepository) *ProductService {
 	return &ProductService{
 		ProductDB:  productDB,
 		CategoryDB: categoryDB,
