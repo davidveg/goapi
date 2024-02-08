@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/davidveg/goapi/modules/internal/database/connectors"
-	"github.com/davidveg/goapi/modules/internal/database/repositories"
+	"github.com/davidveg/goapi/modules/internal/dataproviders/connectors"
+	"github.com/davidveg/goapi/modules/internal/dataproviders/repositories"
 	"github.com/davidveg/goapi/modules/internal/entrypoints"
 	"github.com/davidveg/goapi/modules/internal/service"
 	"github.com/go-chi/chi/v5"
