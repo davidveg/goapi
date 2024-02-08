@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/davidveg/goapi/modules/internal/dataproviders/repositories"
-	"github.com/davidveg/goapi/modules/internal/entity"
+	"github.com/davidveg/goapi/modules/internal/entities"
 )
 
 type ProductService struct {
@@ -17,7 +17,7 @@ func NewProductService(productDB repositories.ProductRepository, categoryDB repo
 	}
 }
 
-func (ps *ProductService) GetProducts() ([]*entity.Product, error) {
+func (ps *ProductService) GetProducts() ([]*entities.Product, error) {
 	products, err := ps.ProductDB.GetProducts()
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func (ps *ProductService) GetProducts() ([]*entity.Product, error) {
 	return products, nil
 }
 
-func (ps *ProductService) GetProduct(id string) (*entity.Product, error) {
+func (ps *ProductService) GetProduct(id string) (*entities.Product, error) {
 	product, err := ps.ProductDB.GetProduct(id)
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (ps *ProductService) GetProduct(id string) (*entity.Product, error) {
 	return product, nil
 }
 
-func (ps *ProductService) GetProductsByCategoryID(categoryID string) ([]*entity.Product, error) {
+func (ps *ProductService) GetProductsByCategoryID(categoryID string) ([]*entities.Product, error) {
 	products, err := ps.ProductDB.GetProductByCategoryID(categoryID)
 	if err != nil {
 		return nil, err
@@ -41,9 +41,9 @@ func (ps *ProductService) GetProductsByCategoryID(categoryID string) ([]*entity.
 	return products, nil
 }
 
-func (ps *ProductService) CreateProduct(name, description, categoryId, imageUrl string, price float64) (*entity.Product, error) {
+func (ps *ProductService) CreateProduct(name, description, categoryId, imageUrl string, price float64) (*entities.Product, error) {
 	category, _ := ps.CategoryDB.GetCategory(categoryId)
-	product := entity.NewProduct(name, description, imageUrl, price, *category)
+	product := entities.NewProduct(name, description, imageUrl, price, *category)
 	p, err := ps.ProductDB.CreateProduct(product)
 	if err != nil {
 		return nil, err

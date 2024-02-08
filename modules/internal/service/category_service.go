@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/davidveg/goapi/modules/internal/dataproviders/repositories"
-	"github.com/davidveg/goapi/modules/internal/entity"
+	"github.com/davidveg/goapi/modules/internal/entities"
 )
 
 type CategoryService struct {
@@ -13,7 +13,7 @@ func NewCategoryService(categoryDB repositories.CategoryRepository) *CategorySer
 	return &CategoryService{CategoryDB: categoryDB}
 }
 
-func (cs *CategoryService) GetCategories() ([]*entity.Category, error) {
+func (cs *CategoryService) GetCategories() ([]*entities.Category, error) {
 	categories, err := cs.CategoryDB.GetCategories()
 	if err != nil {
 		return nil, err
@@ -21,8 +21,8 @@ func (cs *CategoryService) GetCategories() ([]*entity.Category, error) {
 	return categories, nil
 }
 
-func (cs *CategoryService) CreateCategory(name, description string) (*entity.Category, error) {
-	category := entity.NewCategory(name, description)
+func (cs *CategoryService) CreateCategory(name, description string) (*entities.Category, error) {
+	category := entities.NewCategory(name, description)
 	_, err := cs.CategoryDB.CreateCategory(category)
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (cs *CategoryService) CreateCategory(name, description string) (*entity.Cat
 	return category, nil
 }
 
-func (cs *CategoryService) GetCategory(id string) (*entity.Category, error) {
+func (cs *CategoryService) GetCategory(id string) (*entities.Category, error) {
 	category, err := cs.CategoryDB.GetCategory(id)
 	if err != nil {
 		return nil, err

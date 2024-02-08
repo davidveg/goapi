@@ -2,7 +2,7 @@ package entrypoints
 
 import (
 	"encoding/json"
-	"github.com/davidveg/goapi/modules/internal/entity"
+	"github.com/davidveg/goapi/modules/internal/entities"
 	"github.com/davidveg/goapi/modules/internal/service"
 	"github.com/go-chi/chi/v5"
 	"net/http"
@@ -46,7 +46,7 @@ func (wch *CategoryController) GetCategory(w http.ResponseWriter, r *http.Reques
 }
 
 func (wch *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
-	var category entity.Category
+	var category entities.Category
 	err := json.NewDecoder(r.Body).Decode(&category)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
