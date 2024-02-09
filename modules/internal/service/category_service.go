@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/davidveg/goapi/modules/internal/dataproviders/repositories"
+	"github.com/davidveg/goapi/modules/internal/data_providers/repositories"
 	"github.com/davidveg/goapi/modules/internal/entities"
 )
 

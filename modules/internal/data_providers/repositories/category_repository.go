@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"database/sql"
-	"github.com/davidveg/goapi/modules/internal/dataproviders/connectors"
+	"github.com/davidveg/goapi/modules/internal/data_providers/connectors"
 	"github.com/davidveg/goapi/modules/internal/entities"
 )
 
