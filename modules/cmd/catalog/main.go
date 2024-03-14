@@ -20,6 +20,7 @@ func main() {
 	// Mantenha a aplicação em execução
 	log.Println("Listener iniciado. Aguardando mensagens...")
 
+	// Inicie o WebServer
 	var r = routes.CreateRoutes()
 	log.Println("Server is running on port 8080")
 	err1 := http.ListenAndServe(":8080", r)
@@ -29,6 +30,7 @@ func main() {
 	}
 
 	<-ctx.Done()
+
 	log.Println("Listener encerrado")
 
 	defer connectors.CloseDBConnection()
