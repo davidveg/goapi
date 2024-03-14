@@ -27,6 +27,7 @@ func CreateRoutes() *chi.Mux {
 	routes.Get("/product", ProductController.GetProducts)
 	routes.Get("/product/category/{categoryID}", ProductController.GetProductsByCategoryId)
 	routes.Post("/product", ProductController.CreateProduct)
+	routes.Post("/queue/sqs/message", entrypoints.SendMessages)
 
 	return routes
 }
