@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/sqs"
-	"github.com/davidveg/goapi/modules/internal/entrypoints/queues/config"
+	"github.com/davidveg/goapi/modules/internal/config"
 	"github.com/magiconair/properties"
 	"log"
 )
