@@ -2,7 +2,6 @@ package queues
 
 import (
 	"context"
-	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/davidveg/goapi/modules/internal/entrypoints/queues/config"
@@ -25,7 +24,7 @@ func ReceiveSQSMessages(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Println("Encerrando a função de recebimento de mensagens...")
+			log.Println("Encerrando a função de recebimento de mensagens...")
 			return
 		default:
 
@@ -37,14 +36,14 @@ func ReceiveSQSMessages(ctx context.Context) {
 				MaxNumberOfMessages: aws.Int64(p.GetInt64("sqs.queue.max_messages", 1)), // Defina o número máximo de mensagens a serem recebidas
 			})
 			if err != nil {
-				log.Print("Erro ao receber mensagem da fila", err)
+				log.Fatalf("Erro ao receber mensagem da fila: %v", err)
 				return
 			}
 
 			if len(resultReceive.Messages) > 0 {
-				log.Print("Mensagens recebidas:")
+				log.Println("Mensagens recebidas:")
 				for _, message := range resultReceive.Messages {
-					log.Print("Corpo da mensagem:", *message.Body)
+					log.Println("Corpo da mensagem:", *message.Body)
 
 					// Excluir mensagem da fila SQS após processamento
 					_, err := svc.DeleteMessage(&sqs.DeleteMessageInput{
@@ -52,10 +51,10 @@ func ReceiveSQSMessages(ctx context.Context) {
 						ReceiptHandle: message.ReceiptHandle,
 					})
 					if err != nil {
-						log.Print("Erro ao excluir mensagem da fila", err)
+						log.Fatalf("Erro ao excluir mensagem da fila: %v", err)
 						return
 					}
-					log.Print("Mensagem excluída com sucesso")
+					log.Println("Mensagem excluída com sucesso")
 				}
 			}
 		}

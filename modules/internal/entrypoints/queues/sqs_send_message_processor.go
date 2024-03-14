@@ -31,11 +31,11 @@ func SendSQSMessages(sqsMessage *dto.SQSMessageRequest) error {
 		QueueUrl:    aws.String(p.GetString("sqs.queue.url", "")),
 	})
 	if err != nil {
-		log.Print("Erro ao enviar mensagem para a fila", err)
+		log.Fatalf("Erro ao enviar mensagem para a fila: %v", err)
 		return err
 	}
 
-	log.Print("Mensagem enviada com sucesso com ID:", *result.MessageId)
+	log.Println("Mensagem enviada com sucesso com ID:", *result.MessageId)
 
 	return nil
 }

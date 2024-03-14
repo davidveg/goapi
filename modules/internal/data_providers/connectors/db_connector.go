@@ -2,8 +2,8 @@ package connectors
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 func GetDBConnection() *sql.DB {
@@ -19,7 +19,7 @@ func CloseDBConnection() {
 	defer func(db *sql.DB) {
 		err := db.Close()
 		if err != nil {
-			fmt.Println("ERROR {}", err)
+			log.Fatalf("ERROR: %v", err)
 		}
 	}(db)
 }
