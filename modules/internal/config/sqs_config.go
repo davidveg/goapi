@@ -5,15 +5,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/magiconair/properties"
-	"log"
 )
 
-func CreateSQSSession() (*session.Session, error) {
-	// Carregar o arquivo de propriedades
-	p, err := properties.LoadFile("config.properties", properties.UTF8)
-	if err != nil {
-		log.Fatalf("Erro ao carregar arquivo de propriedades: %v", err)
-	}
+func CreateSQSSession(p *properties.Properties) (*session.Session, error) {
 
 	// Acessar as propriedades
 	credentialsId := p.GetString("sqs.credentials.id", "")

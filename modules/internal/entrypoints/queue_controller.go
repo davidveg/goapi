@@ -2,6 +2,7 @@ package entrypoints
 
 import (
 	"encoding/json"
+	"github.com/davidveg/goapi/modules/internal/config"
 	"github.com/davidveg/goapi/modules/internal/entrypoints/dto"
 	"github.com/davidveg/goapi/modules/internal/entrypoints/queues"
 	"net/http"
@@ -14,7 +15,7 @@ func SendMessages(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	err = queues.SendSQSMessages(&message)
+	err = queues.SendSQSMessages(&message, config.CreateProperties())
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

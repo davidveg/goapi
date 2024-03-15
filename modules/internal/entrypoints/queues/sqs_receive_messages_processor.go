@@ -9,14 +9,8 @@ import (
 	"log"
 )
 
-func ReceiveSQSMessages(ctx context.Context) {
-	// Carregar o arquivo de propriedades
-	p, err := properties.LoadFile("config.properties", properties.UTF8)
-	if err != nil {
-		log.Fatalf("Erro ao carregar arquivo de propriedades: %v", err)
-	}
-
-	sess, err := config.CreateSQSSession()
+func ReceiveSQSMessages(ctx context.Context, p *properties.Properties) {
+	sess, err := config.CreateSQSSession(p)
 	if err != nil {
 		log.Fatalf("Erro ao criar sessão do SQS: %v", err)
 	}

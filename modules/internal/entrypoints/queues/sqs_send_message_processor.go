@@ -9,15 +9,9 @@ import (
 	"log"
 )
 
-func SendSQSMessages(sqsMessage *dto.SQSMessageRequest) error {
-	// Carregar o arquivo de propriedades
-	p, err := properties.LoadFile("config.properties", properties.UTF8)
-	if err != nil {
-		log.Fatalf("Erro ao carregar arquivo de propriedades: %v", err)
-		return err
-	}
+func SendSQSMessages(sqsMessage *dto.SQSMessageRequest, p *properties.Properties) error {
 
-	sess, err := config.CreateSQSSession()
+	sess, err := config.CreateSQSSession(p)
 	if err != nil {
 		log.Fatalf("Erro ao criar sessão do SQS: %v", err)
 		return err

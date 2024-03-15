@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/davidveg/goapi/modules/internal/config"
 	"github.com/davidveg/goapi/modules/internal/data_providers/connectors"
 	"github.com/davidveg/goapi/modules/internal/entrypoints/queues"
 	"github.com/davidveg/goapi/modules/internal/routes"
@@ -15,7 +16,7 @@ func main() {
 	ctx := context.Background()
 
 	// Inicie o listener em uma goroutine
-	go queues.ReceiveSQSMessages(ctx)
+	go queues.ReceiveSQSMessages(ctx, config.CreateProperties())
 
 	// Mantenha a aplicação em execução
 	log.Println("Listener iniciado. Aguardando mensagens...")
